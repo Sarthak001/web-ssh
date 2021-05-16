@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %} Console {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/xterm.css') }}">
+<script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+{% endblock %}
+
+{% block bodyid %}body-pd{% endblock %}
+
+{% block content %}
+
+<header class="header" id="header">
+    <div class="header__toggle">
+        <i class='bx bx-menu' id="header-toggle"></i>
+    </div>
+</header>
+
+<div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+        <div>
+            <a href="#" class="nav__logo">
+                <i class='bx bx-layer nav__logo-icon'></i>
+                <span class="nav__logo-name">Web-SSH</span>
+            </a>
+
+            <div class="nav__list">
+                <a href="#" class="nav__link active">
+                    <i class='bx bx-terminal nav__icon'></i>
+                    <span class="nav__name">Console</span>
+                </a>
+
+                <a href="{{ url_for('info') }}" class="nav__link">
+                    <i class='bx bx-info-circle nav__icon'></i>
+                    <span class="nav__name">Server Details</span>
+                </a>
+            </div>
+        </div>
+
+        <a href="#" class="nav__link">
+            <i class='bx bx-log-out nav__icon'></i>
+            <span class="nav__name">Disconnect</span>
+        </a>
+    </nav>
+</div>
+
+<div class="container mt-5 pt-5">
+    <div id="terminal"></div>
+</div>
+<div class="">
+    <button class="btn btn-info" type="submit">Reconnect</button>
+    <button class="btn btn-danger" type="submit">Disconnect</button>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script src="{{ url_for('static', filename='assets/js/xterm.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/term.js') }}"></script>
+
+{% endblock %}

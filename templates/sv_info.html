@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %} Information {% endblock %}
+{% block bodyid %}body-pd{% endblock %}
+
+{% block content %}
+<header class="header" id="header">
+    <div class="header__toggle">
+        <i class='bx bx-menu' id="header-toggle"></i>
+    </div>
+</header>
+
+<div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+        <div>
+            <a href="#" class="nav__logo">
+                <i class='bx bx-layer nav__logo-icon'></i>
+                <span class="nav__logo-name">Web-SSH</span>
+            </a>
+
+            <div class="nav__list">
+                <a href="{{ url_for('terminal') }}" class="nav__link">
+                    <i class='bx bx-terminal nav__icon'></i>
+                    <span class="nav__name">Console</span>
+                </a>
+
+                <a href="#" class="nav__link active">
+                    <i class='bx bx-info-circle nav__icon '></i>
+                    <span class="nav__name">Server Details</span>
+                </a>
+            </div>
+        </div>
+
+        <a href="#" class="nav__link">
+            <i class='bx bx-log-out nav__icon'></i>
+            <span class="nav__name">Disconnect</span>
+        </a>
+    </nav>
+</div>
+
+<div class="container-fluid mt-5 pt-5 text-w">
+
+    <h3>System Information :</h3>
+    <p style="font-size: 20px;">
+        Hostname:  <br>
+        Uptime:  <br>
+        Operating System:  <br>
+        Kernel:  <br>
+        Processor:  <br>
+    </p>
+    <h3>CPU / Memory Usage :</h3>
+    <p style="font-size: 20px;">
+        Memory Usage:  <br>
+        Swap Usage:  <br>
+        CPU Usage: <br>
+    </p>
+    <h3>Network Information :</h3>
+    <p style="font-size: 20px;">
+        WAN / Public Ip:  <br>
+        Private Ip:  <br>
+        Gateway Address:  <br>
+
+    </p>
+</div>
+{% endblock %}
+
+{% block js %}
+
+
+{% endblock %}
