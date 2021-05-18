@@ -63,6 +63,7 @@ def auth():
     log = logs(ip_address,ip,dt_string)
     db.session.add(log)
     db.session.commit()
+
     port = int(port)
     obj = test.ssh(ip,port,username,password)
     users[ip] = obj
@@ -84,18 +85,32 @@ def info():
     if not session.get("ip"):
         return redirect(url_for('details'))
     else:
-        return render_template('sv_info.html')
+        gg = ''
+        lst = list(users.keys())
+        print(lst)
+        if(session["ip"] in lst):
+            obj = users[session["ip"]]
+            obj.details()
+            gg= obj.recv()
+            print(gg)
+        return render_template('sv_info.html',data=gg)
 
 
 @socketio.on('jsrecv')
 def jsrecv(msg):
-    print(session)
     lst = list(users.keys())
     if(session["ip"] in lst):
         obj = users[session["ip"]]
         obj.send(msg)
         data = obj.recv()
         emit('py',data)
+
+
+@app.route('/test')
+def test2():
+    l = logs.query.filter(logs.id > 0).all()
+    return render_template('adminlogs.html',data=l)
+
 
 
 

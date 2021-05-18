@@ -12,8 +12,6 @@ term.onKey(e => {
             }
             break;
         default:
-            var f = e.key;
-            console.log(f);
             socket.emit("jsrecv", e.key);
     }
 });

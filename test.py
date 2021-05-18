@@ -27,9 +27,17 @@ class ssh:
             time.sleep(0.01)
             size, data = self.channel.read(9999)
             return(data.decode())
-        
+    
+    def details(self):
+        self.channel.write("hostname \r")
+        self.channel.write("uptime \r")
+        self.channel.write("hostnamectl | grep Op \r")
+        self.channel.write("uname -r \r")
+
+
+
 
     def disconnect(self):
-        channel.close()
+        self.channel.close()
         return ("Exit status: %s" % connection.channel.get_exit_status())
 

@@ -32,3 +32,18 @@ function colorLink(){
     }
 }
 linkColor.forEach(l=> l.addEventListener('click', colorLink))
+
+
+var option = {
+
+        animation : true,
+        delay : 5000
+};
+
+function toast(){
+    var toast = document.getElementById("liveToast");
+    var toastboot = new bootstrap.Toast(toast,option);
+    toastboot.show()
+}
+
+toast()
