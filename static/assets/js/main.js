@@ -9,7 +9,7 @@ const showNavbar = (toggleId, navId, bodyId, headerId) =>{
     if(toggle && nav && bodypd && headerpd){
         toggle.addEventListener('click', ()=>{
             // show navbar
-            nav.classList.toggle('show')
+            nav.classList.toggle('shows')
             // change icon
             toggle.classList.toggle('bx-x')
             // add padding to body

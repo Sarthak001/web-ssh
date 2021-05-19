@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %} Information {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+{% endblock %}
+
+
 {% block bodyid %}body-pd{% endblock %}
+
+
 
 {% block content %}
 <header class="header" id="header">

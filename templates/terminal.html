@@ -3,11 +3,15 @@
 {% block title %} Console {% endblock %}
 
 {% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/xterm.css') }}">
 <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
 {% endblock %}
 
 {% block bodyid %}body-pd{% endblock %}
+
+{% block bodyclass %}bg-color-2{% endblock %}
+
 
 {% block content %}
 
@@ -48,7 +52,9 @@
 <div class="container mt-5 pt-5">
     <div id="terminal"></div>
 </div>
-<div class="">
+<br>
+<div class="text-center">
+    <button class="btn btn-success" type="submit">Connect</button>
     <button class="btn btn-info" type="submit">Reconnect</button>
     <button class="btn btn-danger" type="submit">Disconnect</button>
 </div>

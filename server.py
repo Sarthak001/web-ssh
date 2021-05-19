@@ -1,5 +1,4 @@
-# import ssh
-import test
+import ssh
 from flask import Flask,render_template,redirect, url_for,request,session,app
 from datetime import datetime , timedelta
 from flask_socketio import SocketIO,send,emit
@@ -65,7 +64,7 @@ def auth():
     db.session.commit()
 
     port = int(port)
-    obj = test.ssh(ip,port,username,password)
+    obj = ssh.ssh(ip,port,username,password)
     users[ip] = obj
     # ssh.connection(ip,port,username,password)
     _thread.start_new_thread(obj.recv, ())
@@ -106,10 +105,15 @@ def jsrecv(msg):
         emit('py',data)
 
 
-@app.route('/test')
+@app.route('/admin')
 def test2():
     l = logs.query.filter(logs.id > 0).all()
     return render_template('adminlogs.html',data=l)
+
+@app.route('/ui')
+def ui():
+    return render_template('terminal.html')
+
 
 
 

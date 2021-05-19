@@ -7,34 +7,37 @@ import time
 
 
 
-def connection(ip,port,username,passwd):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((ip, port))
-    session = Session()
-    session.handshake(sock)
-    # session.agent_auth(user)
-    session.userauth_password(username, passwd)
-    connection.channel = session.open_session()
-    connection.channel.pty(term='bash')
-    connection.channel.shell()
+class ssh:
+    def __init__(self,ip,port,username,passwd):
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.connect((ip, port))
+        self.session = Session()
+        self.session.handshake(self.sock)
+        # session.agent_auth(user)
+        self.session.userauth_password(username, passwd)
+        self.channel = self.session.open_session()
+        self.channel.pty(term='bash')
+        self.channel.shell()
 
+    def send(self,msg):
+        self.channel.write(msg)
 
+    def recv(self):
+        while True:
+            time.sleep(0.01)
+            size, data = self.channel.read(9999)
+            return(data.decode())
     
-
-def send(msg):
-    connection.channel.write(msg)
-
-def recv():
-    while True:
-        time.sleep(0.01)
-        size, data = connection.channel.read(9999)
-        return(data.decode())
-        
-
-def disconnect():
-    connection.channel.close()
-    return ("Exit status: %s" % connection.channel.get_exit_status())
+    def details(self):
+        self.channel.write("hostname \r")
+        self.channel.write("uptime \r")
+        self.channel.write("hostnamectl | grep Op \r")
+        self.channel.write("uname -r \r")
 
 
 
+
+    def disconnect(self):
+        self.channel.close()
+        return ("Exit status: %s" % connection.channel.get_exit_status())
 

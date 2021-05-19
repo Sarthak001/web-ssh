@@ -1,4 +1,4 @@
-/*===== GOOGLE FONTS =====*/
+/* ===== GOOGLE FONTS =====
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
 
 /*===== VARIABLES CSS =====*/
@@ -150,7 +150,7 @@ a{
 }
 
 /*Show navbar movil*/
-.show{
+.shows{
   left: 0;
 }
 
@@ -200,7 +200,7 @@ a{
   }
   
   /*Show navbar desktop*/
-  .show{
+  .shows{
     width: calc(var(--nav-width) + 156px);
   }
 
@@ -209,5 +209,4 @@ a{
     padding-left: calc(var(--nav-width) + 188px);
   }
 }
-
 
