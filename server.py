@@ -5,11 +5,21 @@ from flask_socketio import SocketIO,send,emit
 import _thread
 import time
 import database
+import os
+import pathlib
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import  FileStorage
+
+
+path = pathlib.Path(__file__).parent.absolute()
+
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = '!secret!'
 socketio = SocketIO(app)
-
+UPLOAD_FOLDER = f'{path}/keys'
+app.config['UPLOAD_FOLDER'] = "/home/kahtras/projects/web-ssh/keys"
+ALLOWED_EXTENSIONS = {'.pub'}
 users = {}
 active_shells = []
 
@@ -23,6 +33,21 @@ def auth():
     port = request.form["port"]
     username = request.form["username"]
     password = request.form["password"]
+    authmethod = request.form["auth"]
+    if(authmethod == "key"):
+        password = ''
+        key = request.files['key']
+        filename = secure_filename(key.filename)
+        key.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), encoding = 'utf-8') as f:
+            privatekey = f.read()
+        if(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        else:
+            print("The file does not exist") 
+    else:
+        privatekey  = ''
+
     session['ip'] = ip
     ip_address = request.remote_addr
     now = datetime.now()
@@ -34,9 +59,8 @@ def auth():
     database.session.add(activeuser)
     database.session.commit()
 
-
     port = int(port)
-    obj = ssh.ssh(ip,port,username,password)
+    obj = ssh.ssh(ip,port,username,authmethod,password,privatekey)
     users[ip] = obj
     # ssh.connection(ip,port,username,password)
     

@@ -20,6 +20,8 @@ socket.on('py', (data) => {
   });
 
 
+
+
   $('#disconnect').on("click",function(){
     setTimeout(function(){
         window.location.replace("disconnect");

@@ -8,11 +8,13 @@ import time
 
 
 class ssh:
-    def __init__(self,ip,port,username,passwd):
+    def __init__(self,ip,port,username,authmethod,passwd = None,key = None):
         self.ip = ip
         self.port = port
         self.username = username
         self.passwd = passwd
+        self.key = key
+        self.authmethod = authmethod
 
 
     
@@ -22,9 +24,14 @@ class ssh:
         self.session = Session()
         self.session.handshake(self.sock)
         # session.agent_auth(user)
-        self.session.userauth_password(self.username, self.passwd)
-        self.channel = self.session.open_session()
-    
+        if(self.authmethod == 'password'):
+            self.session.userauth_password(self.username, self.passwd)
+            self.channel = self.session.open_session()
+        else:
+            privatekey = self.key.encode('utf-8')
+            self.session.userauth_publickey_frommemory(self.username, privatekey, passphrase='')
+            self.channel = self.session.open_session()
+
     def invoke_shell(self):
         self.channel.pty(term='bash')
         self.channel.shell()

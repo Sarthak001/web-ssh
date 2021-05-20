@@ -16,7 +16,10 @@
         <div class="text-center mb-2">
           <i class='bx bx-terminal bx-flashing' style="font-size: 50px;color: #4AF626;"></i>
         </div>
-        <form class="row g-2 needs-validation text-w" method="POST" action="{{ url_for('auth') }}" novalidate>
+
+
+
+        <form class="row g-2 needs-validation text-w" method="POST" enctype="multipart/form-data" action="{{ url_for('auth') }}" novalidate>
           <div class="col-md-8 position-relative">
             <label for="validationTooltip01" class="form-label">Ip-Address / Domain:</label>
             <input type="text" class="form-control form-control-sm" id="validationTooltip01" name="ip" required>
@@ -68,7 +71,7 @@
           <div id="key" class="col-md-12 position-relative d-none">
             <div class="mb-3">
               <label for="formFileSm" class="form-label">Upload Private Key:</label>
-              <input id="input-key" class="form-control form-control-sm" id="formFileSm" type="file">
+              <input id="input-key" name="key" class="form-control form-control-sm" id="formFileSm" type="file">
               <div class="invalid-tooltip">
                 File required!
               </div>
