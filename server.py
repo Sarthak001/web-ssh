@@ -4,46 +4,14 @@ from datetime import datetime , timedelta
 from flask_socketio import SocketIO,send,emit
 import _thread
 import time
-from flask_sqlalchemy import SQLAlchemy
+import database
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = '!secret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://database:database@192.168.122.76:3306/webssh'
 socketio = SocketIO(app)
-db = SQLAlchemy(app)
 
 users = {}
-
-
-
-
-class logs(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    source_ip = db.Column(db.String(100))
-    ssh_ip = db.Column(db.String(100))
-    time = db.Column(db.String(100))
-
-
-    def __init__(self,source_ip,ssh_ip,time):
-        self.source_ip = source_ip
-        self.ssh_ip = ssh_ip
-        self.time = time
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+active_shells = []
 
 @app.route('/')
 def details():
@@ -59,17 +27,30 @@ def auth():
     ip_address = request.remote_addr
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-    log = logs(ip_address,ip,dt_string)
-    db.session.add(log)
-    db.session.commit()
+    log = database.logs(source_ip=ip_address,ssh_ip=ip,time=dt_string)
+    activeuser = database.activeusers(source_ip=ip_address,ssh_ip=ip,time=dt_string)
+    database.session.add(log)
+    database.session.commit()
+    database.session.add(activeuser)
+    database.session.commit()
+
 
     port = int(port)
     obj = ssh.ssh(ip,port,username,password)
     users[ip] = obj
     # ssh.connection(ip,port,username,password)
-    _thread.start_new_thread(obj.recv, ())
-    return redirect(url_for('terminal'))
     
+    return redirect(url_for('terminal'))
+
+@app.route('/adminauth',methods=["POST"])
+def adminauth():
+    password = request.form["password"]
+    session['admin'] = password
+    print(password)
+    if password == "superuserdo":
+        return render_template('adminpanel.html')
+    else:
+        return redirect(url_for('ui'))
 
 @app.route('/terminal')
 def terminal():
@@ -105,19 +86,43 @@ def jsrecv(msg):
         emit('py',data)
 
 
-@app.route('/admin')
-def test2():
+@app.route('/log')
+def log():
     l = logs.query.filter(logs.id > 0).all()
-    return render_template('adminlogs.html',data=l)
+    
+    return render_template('adminpanel.html',data=l)
+
+@app.route('/activeusers')
+def activeusers():
+    return render_template('adminpanel.html')
 
 @app.route('/ui')
 def ui():
-    return render_template('terminal.html')
+    return render_template('adminauth.html')
+
+
+@app.route('/disconnect')
+def disconnect():
+    if(session["ip"] in active_shells):
+        obj = users[session["ip"]]
+        result = obj.disconnect()
+        active_shells.remove(session["ip"])
+        return redirect(url_for('terminal'))
+
+@app.route('/connect')
+def connect():
+    if not(session["ip"] in active_shells):
+        print(users)
+        obj = users[session["ip"]]
+        obj.connection()
+        _thread.start_new_thread(obj.recv, ())
+        obj.invoke_shell()
+        active_shells.append(session["ip"])
+        return redirect(url_for('terminal'))
 
 
 
 
 
 if __name__ == '__main__':
-    db.create_all()
     socketio.run(app,debug=True)

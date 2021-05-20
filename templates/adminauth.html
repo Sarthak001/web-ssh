@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} Details {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/color.css') }}">
+{% endblock %}
+
+{% block bodyclass %} bg-color-2 {% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-center mt-5">
+  <div class="align-self-center p-5">
+    <div class="bg-color-3" style="width: 25rem;">
+      <div class=" card-body">
+        <div class="text-center mb-2">
+            <i class='bx bx-user-plus' style="font-size: 50px; color:red"></i>
+        </div>
+        <form class="row g-2 needs-validation text-w" method="POST" action="{{ url_for('adminauth') }}" novalidate>
+          <div class="col-md-12 mb-3 position-relative ">
+            <label for="validationTooltip01" class="form-label">Password:</label>
+            <input type="password" class="form-control form-control-sm" id="validationTooltip02"
+              name="password" required>
+            <div class="invalid-tooltip">
+              Password required!
+            </div>
+          </div>
+          <div class="col-md-12 text-center mb-3">
+            <button class="btn btn-danger" type="submit">connect</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='assets/js/validation.js') }}"></script> {% endblock %}

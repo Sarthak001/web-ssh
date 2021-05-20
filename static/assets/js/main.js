@@ -47,3 +47,15 @@ function toast(){
 }
 
 toast()
+
+$('#logs').on("click",function(){
+    setTimeout(function(){
+        window.location.replace("log");
+    }, 3000);
+});
+
+$('#activeusers').on("click",function(){
+    setTimeout(function(){
+        window.location.replace("activeusers");
+    }, 3000);
+});

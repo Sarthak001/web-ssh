@@ -9,13 +9,23 @@ import time
 
 class ssh:
     def __init__(self,ip,port,username,passwd):
+        self.ip = ip
+        self.port = port
+        self.username = username
+        self.passwd = passwd
+
+
+    
+    def connection(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.connect((ip, port))
+        self.sock.connect((self.ip, self.port))
         self.session = Session()
         self.session.handshake(self.sock)
         # session.agent_auth(user)
-        self.session.userauth_password(username, passwd)
+        self.session.userauth_password(self.username, self.passwd)
         self.channel = self.session.open_session()
+    
+    def invoke_shell(self):
         self.channel.pty(term='bash')
         self.channel.shell()
 
@@ -38,6 +48,9 @@ class ssh:
 
 
     def disconnect(self):
+        self.channel.send_eof()
         self.channel.close()
-        return ("Exit status: %s" % connection.channel.get_exit_status())
+        self.session.disconnect()
+        self.sock.close()
+        return ("disconnection successful")
 

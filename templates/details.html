@@ -9,82 +9,84 @@
 {% block content %}
 
 <div class="d-flex justify-content-center mt-5">
-  <div class="align-self-center mt-5">
-    <div class="card mb-3 bg-color-3" style="max-width: 640px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img src="..." alt="...">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <form class="row g-2 needs-validation text-w" method="POST" action="{{ url_for('auth') }}" novalidate>
-              <div class="col-md-7 position-relative">
-                <label for="validationTooltip01" class="form-label">Ip-Address / Domain:</label>
-                <input type="text" class="form-control form-control-sm" id="validationTooltip01" name="ip" required>
-                <div class="invalid-tooltip">
-                  Ip Address required!
-                </div>
-              </div>
-              <div class="col-md-3 position-relative">
-                <label for="validationTooltip02" class="form-label">Port No.:</label>
-                <input type="text" class="form-control form-control-sm" id="validationTooltip02" name="port" required>
-                <div class="invalid-tooltip">
-                  Port Number required!
-                </div>
-              </div>
-      
-              <div class="col-md-10 position-relative">
-                <label for="validationTooltip03" class="form-label">UserName:</label>
-                <input type="text" class="form-control form-control-sm" id="validationTooltip03" name="username" required>
-                <div class="invalid-tooltip">
-                  Username required!
-                </div>
-              </div>
-              <div class="col-md-10 position-relative">
-                <label for="validationTooltip03" class="form-label">Select Authentication Method:</label> <br>
-                <div class="form-check form-check-inline">
-                  <input class="radio-check form-check-input" type="radio" name="auth" id="inlineRadio1" value="key" checked>
-                  <label class="form-check-label" for="inlineRadio1">SSH Key</label>
-                  <div class="invalid-tooltip">
-                    One Option required!
-                  </div>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class=" radio-check form-check-input" type="radio" name="auth" id="inlineRadio2" value="password">
-                  <label class="form-check-label" for="inlineRadio2">Password</label>
-                  <div class="invalid-tooltip">
-                    One Option required!
-                  </div>
-                </div>
-              </div>
-      
-              <div id="pass" class="col-md-10 position-relative d-none">
-                <label for="validationTooltip05" class="form-label">Password:</label>
-                <input id="input-pass"type="password" class="form-control form-control-sm" id="validationTooltip04" name="password">
-                <div class="invalid-tooltip">
-                  Password required!
-                </div>
-              </div>
-              <div id="key" class="col-md-10 position-relative d-none">
-                <div class="mb-3">
-                  <label for="formFileSm" class="form-label">Upload Private Key:</label>
-                  <input id="input-key" class="form-control form-control-sm" id="formFileSm" type="file">
-                  <div class="invalid-tooltip">
-                    File required!
-                  </div>
-                </div>
-              </div>
-              <div class="col-10 text-center mb-3">
-                <button class="btn btn-success" type="submit">connect</button>
-              </div>
-            </form>
+  <div class="align-self-center p-5">
 
-          </div>
+    <div class="bg-color-3" style="width: 25rem;">
+      <div class=" card-body">
+        <div class="text-center mb-2">
+          <i class='bx bx-terminal bx-flashing' style="font-size: 50px;color: #4AF626;"></i>
         </div>
+        <form class="row g-2 needs-validation text-w" method="POST" action="{{ url_for('auth') }}" novalidate>
+          <div class="col-md-8 position-relative">
+            <label for="validationTooltip01" class="form-label">Ip-Address / Domain:</label>
+            <input type="text" class="form-control form-control-sm" id="validationTooltip01" name="ip" required>
+            <div class="invalid-tooltip">
+              Ip Address required!
+            </div>
+          </div>
+          <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label">Port No.:</label>
+            <input type="text" class="form-control form-control-sm" id="validationTooltip02" name="port" required>
+            <div class="invalid-tooltip">
+              Port Number required!
+            </div>
+          </div>
+
+          <div class="col-md-12 position-relative">
+            <label for="validationTooltip03" class="form-label">UserName:</label>
+            <input type="text" class="form-control form-control-sm" id="validationTooltip03" name="username" required>
+            <div class="invalid-tooltip">
+              Username required!
+            </div>
+          </div>
+          <div class="col-md-12 position-relative">
+            <label for="validationTooltip03" class="form-label">Select Authentication Method:</label> <br>
+            <div class="form-check form-check-inline">
+              <input class="radio-check form-check-input" type="radio" name="auth" id="inlineRadio1" value="key">
+              <label class="form-check-label" for="inlineRadio1">SSH Key</label>
+              <div class="invalid-tooltip">
+                One Option required!
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class=" radio-check form-check-input" type="radio" name="auth" id="inlineRadio2" value="password">
+              <label class="form-check-label" for="inlineRadio2">Password</label>
+              <div class="invalid-tooltip">
+                One Option required!
+              </div>
+            </div>
+          </div>
+
+          <div id="pass" class="col-md-12 mb-3 position-relative d-none">
+            <label for="validationTooltip05" class="form-label">Password:</label>
+            <input id="input-pass" type="password" class="form-control form-control-sm" id="validationTooltip04"
+              name="password">
+            <div class="invalid-tooltip">
+              Password required!
+            </div>
+          </div>
+          <div id="key" class="col-md-12 position-relative d-none">
+            <div class="mb-3">
+              <label for="formFileSm" class="form-label">Upload Private Key:</label>
+              <input id="input-key" class="form-control form-control-sm" id="formFileSm" type="file">
+              <div class="invalid-tooltip">
+                File required!
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-center mb-3">
+            <button class="btn btn-success" type="submit">connect</button>
+          </div>
+        </form>
+
+
+
+
+
       </div>
     </div>
-    </div>
   </div>
+</div>
 
 
 {% endblock %}

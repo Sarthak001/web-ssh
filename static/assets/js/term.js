@@ -18,4 +18,16 @@ socket.on('py', (data) => {
     console.log(data);
     term.write(data);
   });
-  
+
+
+  $('#disconnect').on("click",function(){
+    setTimeout(function(){
+        window.location.replace("disconnect");
+    }, 3000);
+});
+
+$('#connect').on("click",function(){
+    setTimeout(function(){
+        window.location.replace("connect");
+    }, 1000);
+});
