@@ -2,8 +2,8 @@
 A web ssh client
 
 # Requirments / dependencies
-bidict==0.21.2
-click==7.1.2
+1. bidict==0.21.2 \n
+2. click==7.1.2
 Flask==1.1.2
 Flask-SocketIO==5.0.1
 Flask-SQLAlchemy==2.5.1
