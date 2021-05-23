@@ -41,6 +41,7 @@ class ssh:
 
     def recv(self):
         while True:
+            data = ''
             time.sleep(0.01)
             size, data = self.channel.read(9999)
             return(data.decode())

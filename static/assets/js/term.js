@@ -5,7 +5,7 @@ term.onKey(e => {
     switch (e) {
         case '\u007F': // Backspace (DEL)
             // Do not delete the prompt
-            if (term._core.buffer.x > 0) {
+            if (term.buffer.x < 2) {
                 term.write('\b \b');
             }
             break;
